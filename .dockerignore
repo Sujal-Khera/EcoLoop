@@ -1,0 +1,43 @@
+# Virtual Environments and Python Caches
+venv/
+env/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Git and Version Control
+.git/
+.gitignore
+
+# Log Files
+*.log
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test files
+tests/
+test/
+*_test.py
+*_tests.py
+
+# Documentation
+docs/
+*.md
+LICENSE
+
+# Large binary files not needed at runtime
+*.png
+*.jpg
+*.jpeg
+# IMPORTANT: Keep the specific images your app needs
+# !static/images/required_image.jpg  # Uncomment to keep specific images
+
+# Temporary files
+tmp/
+temp/

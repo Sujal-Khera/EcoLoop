@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buyer Dashboard - Waste to Value</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3e6cb);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .navbar {
+      background: linear-gradient(to right, #28a745, #50e3c2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .navbar-brand {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.5em;
+      letter-spacing: 1px;
+    }
+
+    .nav-link {
+      color: #fff !important;
+      font-weight: 400;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #ffd700 !important;
+      transform: translateY(-2px);
+    }
+
+    .container {
+      padding-top: 60px;
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .dashboard-header {
+      font-size: 2.8em;
+      font-weight: 700;
+      color: #2e7d32;
+      text-shadow: 0 2px 6px rgba(46, 125, 50, 0.3);
+      text-align: center;
+      margin-bottom: 30px;
+      animation: slideIn 1s ease-out forwards;
+    }
+
+    .dashboard-content {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid #c8e6c9;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section h3 {
+      font-size: 1.5em;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    .section p {
+      font-size: 1em;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .btn-custom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      background: linear-gradient(90deg, #28a745, #4caf50);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-custom:hover {
+      background: linear-gradient(90deg, #4caf50, #28a745);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+    }
+
+    .btn-custom::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+
+    .btn-custom:hover::after {
+      width: 300px;
+      height: 300px;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-header {
+        font-size: 2.2em;
+      }
+      .dashboard-content {
+        padding: 20px;
+        width: 90%;
+      }
+      .btn-custom {
+        font-size: 1em;
+        padding: 10px 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-header {
+        font-size: 1.8em;
+      }
+      .dashboard-content {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Waste to Value</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('marketplace') }}">Marketplace</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="dashboard-header">Buyer Dashboard</h1>
+    <div class="dashboard-content">
+      <div class="section">
+        <h3>Your Purchases</h3>
+        <p>View your recent purchases and track your orders for eco-friendly products.</p>
+        <a href="#" class="btn-custom">View Purchases</a>
+      </div>
+      <div class="section">
+        <h3>Explore More</h3>
+        <p>Discover more sustainable products in our marketplace tailored to your interests.</p>
+        <a href="{{ url_for('marketplace') }}" class="btn-custom">Explore Marketplace</a>
+      </div>
+      <div class="section">
+        <h3>Recycling Impact</h3>
+        <p>Learn about the environmental impact of your purchases and recycling efforts.</p>
+        <a href="#" class="btn-custom">View Impact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

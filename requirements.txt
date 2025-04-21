@@ -1,0 +1,16 @@
+Flask
+tensorflow
+numpy
+Pillow
+requests
+google-cloud-storage
+Werkzeug
+opencv-python
+geopy
+flask-sqlalchemy
+sqlalchemy
+Flask-Login
+Flask-WTF
+Flask-Bcrypt
+scipy
+matplotlib

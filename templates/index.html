@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home - Waste to Value</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3e6cb);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .navbar {
+      background: linear-gradient(to right, #28a745, #50e3c2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .navbar-brand {
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.5em;
+      letter-spacing: 1px;
+    }
+    .nav-link {
+      color: #fff !important;
+      font-weight: 400;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+    .nav-link:hover {
+      color: #ffd700 !important;
+      transform: translateY(-2px);
+    }
+    .container {
+      padding-top: 60px;
+      padding-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hero-header {
+      font-size: 3em;
+      font-weight: 700;
+      color: #2e7d32;
+      text-shadow: 0 2px 6px rgba(46, 125, 50, 0.3);
+      text-align: center;
+      margin-bottom: 30px;
+      animation: slideIn 1s ease-out forwards;
+    }
+    .hero-content {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 700px;
+      width: 100%;
+      border: 1px solid #c8e6c9;
+      animation: fadeInUp 1s ease-out forwards;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .hero-content p {
+      font-size: 1.2em;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .classifier-section, .recycling-section {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      max-width: 700px;
+      width: 100%;
+      border: 1px solid #c8e6c9;
+      animation: fadeInUp 1s ease-out forwards;
+      margin-bottom: 20px;
+    }
+    .classifier-section h3, .recycling-section h3 {
+      font-size: 1.8em;
+      font-weight: 600;
+      color: #2e7d32;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .classifier-section input[type="file"] {
+      display: block;
+      margin: 0 auto 20px;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 10px;
+      background: #f8f9fa;
+      transition: border-color 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+    }
+    .classifier-section input[type="file"]:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+    .result-box {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+      display: none;
+    }
+    .result-box p {
+      font-size: 1.1em;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+    .recycling-results {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+      display: none;
+    }
+    .recycling-results ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+    }
+    .recycling-results li {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+    .recycling-results li strong {
+      color: #2e7d32;
+    }
+    .btn-custom {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      background: linear-gradient(90deg, #28a745, #4caf50);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-custom:hover {
+      background: linear-gradient(90deg, #4caf50, #28a745);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+    }
+    .btn-custom::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.6s ease, height 0.6s ease;
+    }
+    .btn-custom:hover::after {
+      width: 300px;
+      height: 300px;
+    }
+    .preview-image {
+      max-width: 300px;
+      max-height: 300px;
+      margin: 20px auto;
+      display: block;
+      border: 2px solid #28a745;
+      border-radius: 10px;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 768px) {
+      .hero-header { font-size: 2.2em; }
+      .hero-content, .classifier-section, .recycling-section { padding: 20px; width: 90%; }
+      .btn-custom { font-size: 1em; padding: 10px 15px; }
+      .classifier-section h3, .recycling-section h3 { font-size: 1.5em; }
+    }
+    @media (max-width: 480px) {
+      .hero-header { font-size: 1.8em; }
+      .hero-content, .classifier-section, .recycling-section { padding: 15px; }
+      .classifier-section h3, .recycling-section h3 { font-size: 1.3em; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index') }}">Waste to Value</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('marketplace') }}">Marketplace</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('about') }}">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+          {% if 'user_id' in session %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="hero-header">Welcome to Waste to Value</h1>
+    <div class="hero-content">
+      <p>Transform waste into treasure with our sustainable solutions. Upload images to classify waste, find nearby recycling centers, and shop eco-friendly products in our marketplace.</p>
+      <a href="{{ url_for('marketplace') }}" class="btn-custom">Explore Marketplace</a>
+      {% if 'user_id' not in session %}
+        <a href="{{ url_for('register') }}" class="btn-custom mt-3">Get Started</a>
+      {% endif %}
+    </div>
+
+    <div class="classifier-section">
+      <h3>Classify Your Waste</h3>
+      <form id="classify-form" enctype="multipart/form-data">
+        <input type="file" id="image" name="image" accept="image/*" required>
+        <button type="submit" class="btn-custom">Classify Waste</button>
+      </form>
+      <!-- Image preview -->
+      <div id="imagePreview" class="text-center">
+        <img id="preview" class="preview-image" style="display:none;">
+      </div>
+      <div id="classification-result" class="result-box">
+        <p id="waste-type"></p>
+        <p id="confidence"></p>
+      </div>
+    </div>
+
+    <div class="recycling-section">
+      <h3>Nearest Recycling Location</h3>
+      <div id="recycling-results" class="recycling-results">
+        <ul id="centers-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <!-- Internal JS for Waste Classifier and Recycling Location -->
+  <script>
+    // File preview functionality
+    document.getElementById('image').addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const preview = document.getElementById('preview');
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Waste Classifier functionality
+    document.getElementById('classify-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData();
+      const imageInput = document.getElementById('image');
+      formData.append('image', imageInput.files[0]);
+
+      try {
+        const response = await fetch('/api/classify', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+
+        if (response.ok) {
+          const resultBox = document.getElementById('classification-result');
+          const wasteTypeElem = document.getElementById('waste-type');
+          const confidenceElem = document.getElementById('confidence');
+
+          wasteTypeElem.textContent = `Waste Type: ${result.waste_type}`;
+          confidenceElem.textContent = `Confidence: ${(result.confidence * 100).toFixed(2)}%`;
+          resultBox.style.display = 'block';
+
+          // Request user location after classification
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              async (position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                // Debug: Log retrieved coordinates
+                console.log(`Retrieved Coordinates: Latitude: ${lat}, Longitude: ${lng}`);
+                const wasteTypeValue = result.waste_type;
+                await findRecyclingCenters(lat, lng, wasteTypeValue);
+              },
+              (error) => {
+                alert('Error getting location: ' + error.message + '. Please enter coordinates manually or try again.');
+              }
+            );
+          } else {
+            alert('Geolocation is not supported by your browser. Please enter coordinates manually.');
+          }
+        } else {
+          alert('Error: ' + (result.error || 'Classification failed'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while classifying the image.');
+      }
+    });
+
+    // Function to find recycling centers and add "View on Maps" button
+    async function findRecyclingCenters(lat, lng, wasteType) {
+      try {
+        const response = await fetch(`/api/recycling-centers?lat=${lat}&lng=${lng}&type=${wasteType}`, {
+          method: 'GET'
+        });
+        const centers = await response.json();
+
+        const resultsDiv = document.getElementById('recycling-results');
+        const centersList = document.getElementById('centers-list');
+        centersList.innerHTML = ''; // Clear previous results
+
+        if (response.ok) {
+          if (centers.length === 0) {
+            centersList.innerHTML = '<p>No recycling centers found nearby.</p>';
+          } else {
+            centers.forEach(center => {
+              const li = document.createElement('li');
+              li.innerHTML = `
+                <strong>${center.name}</strong><br>
+                Address: ${center.address}<br>
+                Accepts: ${center.accepts}<br>
+                Distance: ${center.distance ? center.distance.toFixed(2) + ' km' : 'N/A'}<br>
+                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(center.address)}" 
+                   target="_blank" 
+                   class="btn-custom mt-2">View on Maps</a>
+              `;
+              centersList.appendChild(li);
+            });
+          }
+          resultsDiv.style.display = 'block';
+        } else {
+          alert('Error: ' + (centers.error || 'Could not find recycling centers'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while fetching recycling centers.');
+      }
+    }
+  </script>
+</body>
+</html>

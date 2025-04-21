@@ -1,0 +1,183 @@
+/* style.css */
+
+/* Reset and global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body with eco-friendly gradient and Poppins font */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #c3e6cb);
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+/* Container styling with subtle shadow and fade in animation */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Card styles with hover effect and relative positioning */
+.card {
+  position: relative;
+  margin: 20px 0;
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Card header with green background */
+.card-header {
+  background: #28a745;
+  color: #fff;
+  font-weight: bold;
+  padding: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Card body */
+.card-body {
+  padding: 20px;
+}
+
+/* Enhanced button styling with green gradient */
+.btn-primary {
+  background: linear-gradient(45deg, #28a745, #50e3c2);
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(45deg, #50e3c2, #28a745);
+  transform: scale(1.05);
+}
+
+/* Image preview with green border and zoom animation */
+.preview-image {
+  max-width: 300px;
+  max-height: 300px;
+  margin: 20px 0;
+  border: 5px solid #28a745;
+  border-radius: 10px;
+  animation: zoomIn 0.5s ease;
+}
+
+/* Result container slide-in effect */
+.result-container {
+  display: none;
+  margin-top: 20px;
+  animation: slideIn 0.8s ease-out;
+}
+
+/* Alert styles for classification result */
+.alert {
+  font-size: 1.2em;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Recycling location card styling with green accents */
+.recycling-location {
+  margin: 10px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-left: 4px solid #28a745;
+  border-radius: 5px;
+  background: #f0fff0;
+  transition: background 0.3s ease;
+}
+
+.recycling-location:hover {
+  background: #e0ffe0;
+}
+
+/* Spinner styling */
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+  display: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+      opacity: 0;
+      transform: scale(0.8);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+      opacity: 0;
+      transform: translateX(100px);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+      padding: 10px;
+  }
+  .card-body {
+      padding: 15px;
+  }
+}
+
+/* Waste badge styling for eco-friendly labels */
+.waste-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #28a745;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8em;
+}
