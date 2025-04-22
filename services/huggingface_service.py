@@ -16,8 +16,26 @@ class HuggingFaceService:
 
     def preprocess_image(self, image_path):
         """Preprocess image for Hugging Face API"""
-        with open(image_path, "rb") as image_file:
-            return base64.b64encode(image_file.read()).decode('utf-8')
+        try:
+            # Open and resize image
+            with Image.open(image_path) as img:
+                # Convert to RGB if necessary
+                if img.mode != 'RGB':
+                    img = img.convert('RGB')
+                
+                # Resize if needed (optional, depends on model requirements)
+                img = img.resize((224, 224))
+                
+                # Convert to bytes
+                img_byte_arr = io.BytesIO()
+                img.save(img_byte_arr, format='JPEG')
+                img_byte_arr = img_byte_arr.getvalue()
+                
+                # Convert to base64
+                return base64.b64encode(img_byte_arr).decode('utf-8')
+        except Exception as e:
+            print(f"Error preprocessing image: {str(e)}")
+            raise
 
     def predict(self, image_path):
         """Make prediction using Hugging Face API"""
@@ -58,6 +76,7 @@ class HuggingFaceService:
                 
                 return class_index, confidence
             else:
+                print(f"API Response: {response.text}")  # Add this line for debugging
                 raise Exception(f"API request failed with status code {response.status_code}")
                 
         except Exception as e:
