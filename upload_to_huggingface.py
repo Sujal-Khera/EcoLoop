@@ -1,101 +1,38 @@
 import os
-import tensorflow as tf
-from transformers import AutoFeatureExtractor
-import numpy as np
+import torch
+from transformers import ViTForImageClassification, ViTImageProcessor
 from huggingface_hub import HfApi, create_repo, Repository
-from tensorflow.keras.applications import MobileNetV2
-from tensorflow.keras.models import load_model, Model
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D, BatchNormalization, Dropout, Input
 
 def convert_to_huggingface(model_path, output_dir):
-    """Convert the MobileNetV2-based model to Hugging Face format"""
+    """Convert the model to Hugging Face format"""
     print("Loading model...")
     try:
-        # Create a new model with the same architecture
-        base_model = MobileNetV2(
-            input_shape=(224, 224, 3),
-            include_top=False,
-            weights='imagenet'
+        # Initialize ViT model
+        model = ViTForImageClassification.from_pretrained(
+            'google/vit-base-patch16-224',
+            num_labels=3,  # recyclable, compostable, general_waste
+            ignore_mismatched_sizes=True
         )
         
-        # Add custom layers
-        x = base_model.output
-        x = GlobalAveragePooling2D()(x)
-        x = Dense(256, activation='relu')(x)
-        x = BatchNormalization()(x)
-        x = Dropout(0.5)(x)
-        x = Dense(128, activation='relu')(x)
-        x = BatchNormalization()(x)
-        x = Dropout(0.3)(x)
-        predictions = Dense(3, activation='softmax')(x)
+        # Load weights if they exist
+        if os.path.exists(model_path):
+            print("Loading weights...")
+            model.load_state_dict(torch.load(model_path))
         
-        # Create the model
-        model = Model(inputs=base_model.input, outputs=predictions)
-        
-        # Load weights
-        print("Loading weights...")
-        model.load_weights(model_path)
         print("Model loaded successfully")
-        model.summary()
+        print("\nPreparing model for Hugging Face...")
+        
+        # Save model
+        model.save_pretrained(output_dir)
+        
+        # Save processor
+        processor = ViTImageProcessor.from_pretrained('google/vit-base-patch16-224')
+        processor.save_pretrained(output_dir)
+        
+        print(f"Model saved to {output_dir}")
+        
     except Exception as e:
         print(f"Error loading model: {str(e)}")
-        raise
-    
-    print("\nPreparing model for Hugging Face...")
-    try:
-        # Save model in SavedModel format
-        tf.saved_model.save(model, output_dir)
-        print("Model saved in SavedModel format")
-        
-        # Create model card
-        with open(os.path.join(output_dir, "README.md"), "w") as f:
-            f.write("""---
-language: en
-license: mit
-tags:
-- waste-classification
-- image-classification
-- tensorflow
-datasets:
-- custom
----
-
-# Waste Classification Model
-
-This model classifies waste items into three categories:
-- Recyclable
-- Compostable
-- General Waste
-
-## Model Description
-
-The model is based on MobileNetV2 architecture and has been fine-tuned on a custom waste classification dataset.
-
-### Input
-
-The model expects RGB images of size 224x224 pixels.
-
-### Output
-
-The model outputs probabilities for three classes:
-- 0: Recyclable
-- 1: Compostable
-- 2: General Waste
-
-## Usage
-
-```python
-from transformers import pipeline
-
-classifier = pipeline("image-classification", model="SujalKh/waste-classifier")
-result = classifier("path/to/image.jpg")
-print(result)
-```
-""")
-        print("Created model card")
-        
-    except Exception as e:
-        print(f"Error preparing model: {str(e)}")
         raise
 
 def upload_to_hub(model_dir, repo_name, token):

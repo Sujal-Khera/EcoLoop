@@ -1,4 +1,3 @@
-import tensorflow as tf
 import torch
 from transformers import ViTForImageClassification, ViTImageProcessor
 import numpy as np
