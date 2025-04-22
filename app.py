@@ -8,7 +8,7 @@ from datetime import datetime
 
 # Import services
 from services.image_service import process_image
-from models.classifier import WasteClassifier
+from services.huggingface_service import HuggingFaceService
 from services.location_service import find_recycling_centers
 from database.db import init_db
 from database.models import User, Scan, RecyclingLocation, db, Product, CartItem, Order, OrderItem
@@ -27,8 +27,8 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
 # Initialize database
 init_db(app)
 
-# Initialize classifier model
-classifier = WasteClassifier()
+# Initialize Hugging Face service
+classifier = HuggingFaceService()
 
 # Ensure upload directory exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
