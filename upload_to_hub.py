@@ -22,7 +22,7 @@ def upload_to_huggingface(local_model_path, repo_name, token):
             create_repo(repo_name, token=token, private=True)
         except Exception as e:
             if "409" in str(e):
-                print(f"Repository {repo_name} already exists. Continuing with upload...")
+                print(f"Repository {repo_name} already exists. Updating model...")
             else:
                 raise e
         
@@ -31,7 +31,8 @@ def upload_to_huggingface(local_model_path, repo_name, token):
         api.upload_folder(
             folder_path=local_model_path,
             repo_id=repo_name,
-            token=token
+            token=token,
+            commit_message="Update model with latest version"
         )
         
         print(f"Model successfully uploaded to: https://huggingface.co/{repo_name}")
