@@ -45,7 +45,10 @@ class HuggingFaceService:
             
             # Prepare payload
             payload = {
-                "inputs": image_data
+                "inputs": image_data,
+                "options": {
+                    "wait_for_model": True
+                }
             }
             
             # Make API request
