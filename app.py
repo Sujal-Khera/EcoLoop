@@ -76,11 +76,8 @@ def classify_image():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], saved_filename)
         image_file.save(filepath)
         
-        # Process image for classification
-        processed_image = process_image(filepath)
-        
-        # Classify image
-        classification, confidence = classifier.predict(processed_image)
+        # Classify image directly using file path
+        classification, confidence = classifier.predict(filepath)
         
         # Map classification to waste type
         waste_types = {
