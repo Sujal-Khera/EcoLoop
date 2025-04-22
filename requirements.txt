@@ -23,7 +23,7 @@ huggingface-hub==0.20.3
 
 # Optional - comment out if not needed
 opencv-python==4.9.0.80
-# geopy==2.3.0
+geopy==2.3.0
 matplotlib==3.8.3
 pandas==2.2.0
 seaborn==0.13.2
