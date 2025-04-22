@@ -37,11 +37,21 @@ ENV/
 # Dataset and model files
 sample_dataset/
 models/saved_model/
+models/checkpoints/
 temp/
 uploads/
+*.bin
+*.h5
+*.pth
+*.ckpt
+
+# Database
+*.db
+instance/
 
 # Logs
 *.log
+logs/
 
 # OS
 .DS_Store
