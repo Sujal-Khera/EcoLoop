@@ -6,6 +6,7 @@ import json
 import logging
 from datetime import datetime
 from dotenv import load_dotenv
+from models.classifier import WasteClassifier
 
 # Load environment variables
 load_dotenv()
@@ -31,8 +32,8 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
 # Initialize database
 init_db(app)
 
-# Initialize Hugging Face service
-classifier = HuggingFaceService()
+# Initialize the classifier with Hugging Face model
+classifier = WasteClassifier("SujalKh/waste-classifier")
 
 # Ensure upload directory exists
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
@@ -48,14 +49,42 @@ def login_required(f):
     return wrap
 
 @app.route('/')
-def index():
-    """Render the main application page"""
+def home():
     return render_template('index.html')
 
 @app.route('/static/<path:path>')
 def serve_static(path):
     """Serve static files"""
     return send_from_directory('static', path)
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file provided'}), 400
+    
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+    
+    try:
+        # Save the uploaded file temporarily
+        temp_path = os.path.join('temp', file.filename)
+        os.makedirs('temp', exist_ok=True)
+        file.save(temp_path)
+        
+        # Get prediction
+        class_label, predicted_class, confidence = classifier.predict(temp_path)
+        
+        # Clean up temporary file
+        os.remove(temp_path)
+        
+        return jsonify({
+            'class': class_label,
+            'confidence': float(confidence)
+        })
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/api/classify', methods=['POST'])
 def classify_image():
