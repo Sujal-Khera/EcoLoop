@@ -9,8 +9,8 @@ flask-sqlalchemy==3.0.5
 sqlalchemy==1.4.23
 
 # ML and Data Processing
-torch==2.1.0+cpu
-torchvision==0.16.0+cpu
+torch==2.1.0
+torchvision==0.16.0
 transformers==4.36.2
 numpy==1.26.4
 Pillow==10.2.0
