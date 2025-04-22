@@ -5,6 +5,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import logging
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Import services
 from services.image_service import process_image
